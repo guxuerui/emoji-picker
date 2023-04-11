@@ -6,102 +6,188 @@
     const response = await fetch(
       "https://cdn.jsdelivr.net/npm/@emoji-mart/data"
     );
-    // const response = await fetch("https://api.github.com/emojis");
     return response.json();
   }
 
   let emojisData: IEmoji[] = [];
-  let emojisArr: IEmoji[] = [];
-  let filter = "";
+  let searchedEmojis: IEmoji[] = [];
+  let categoriesData: any[] = [];
   let searchValue = "";
+  let activeIcon = 0;
+  let lightActiveIcon = 0;
 
-  function searchEmojis(filter: string) {
-    emojisArr = emojisData.filter((emoji) => emoji.name.includes(filter));
+  function searchEmojis(searchValue: string) {
+    if (!searchValue) {
+      activeIcon = 0;
+      lightActiveIcon = 0;
+      searchedEmojis = categoriesData[0].emojis;
+      return;
+    }
+
+    activeIcon = 100;
+    lightActiveIcon = 100;
+    searchedEmojis = emojisData.filter(
+      (emoji) =>
+        emoji.keywords.includes(searchValue) || emoji.name.includes(searchValue)
+    );
   }
 
-  function filterEmojis(category?: string) {
-    switch (category) {
-      case "people":
-        filter = "smile";
-        break;
-      case "animals":
-        filter = "cat";
-        break;
-      case "food":
-        filter = "hamburger";
-        break;
-      case "nature":
-        filter = "tree";
-        break;
-      case "weather":
-        filter = "rain";
-        break;
-      case "travel":
-        filter = "car";
-        break;
-      case "objects":
-        filter = "phone";
-        break;
-      case "music":
-        filter = "music";
-        break;
-      default:
-        filter = "undefined";
-        break;
+  function handleClickCategory(index: number) {
+    activeIcon = index;
+    lightActiveIcon = index;
+    searchedEmojis = categoriesData[index].emojis;
+  }
+
+  function handleMouseOver(emoji: IEmoji) {
+    console.log("emoji: ", emoji);
+  }
+
+  $: currentTheme = "";
+
+  function toggleTheme() {
+    if (currentTheme === "light" || currentTheme === "auto") {
+      localStorage.setItem("color-schema", "dark");
+      document.documentElement.classList.add("dark");
+    } else {
+      localStorage.setItem("color-schema", "light");
+      document.documentElement.classList.remove("dark");
     }
-    searchEmojis(filter);
+    loadTheme();
+  }
+
+  function loadTheme() {
+    currentTheme = localStorage.getItem("color-schema") || "auto";
   }
 
   onMount(async () => {
-    const data = await fetchEmojis();
-    console.log("[src/routes/+page.svelte:55] data: ", data);
-    // emojisData = Object.entries(data).map(([key, value]) => {
-    //   return { name: key, url: `${value}` };
-    // });
+    loadTheme();
 
-    console.log("[src/routes/+page.svelte:13] emojis: ", emojisData);
-    filterEmojis();
+    // handle emojis data
+    const data = await fetchEmojis();
+    emojisData = Object.entries(data.emojis as any[]).map(([key, value]) => {
+      return {
+        name: key,
+        icon: value?.skins[0].native,
+        keywords: value?.keywords,
+      };
+    });
+
+    const emojisCategories: any[] = data.categories;
+    function handleEmojiCaegories(category: any) {
+      let currCategoriesData: any[] = [];
+      for (let i = 0; i < category.emojis.length; i++) {
+        const currEmoji = emojisData.filter(
+          (emoji) => emoji.name === category.emojis[i]
+        );
+        currCategoriesData = [...currCategoriesData, ...currEmoji];
+      }
+      return currCategoriesData;
+    }
+
+    for (let i = 0; i < emojisCategories.length; i++) {
+      categoriesData = [
+        ...categoriesData,
+        ...[
+          {
+            id: emojisCategories[i].id,
+            emojis: handleEmojiCaegories(emojisCategories[i]),
+          },
+        ],
+      ];
+    }
+
+    searchedEmojis = categoriesData[0].emojis;
   });
 </script>
 
 <svelte:head>
   <title>Home</title>
-  <meta name="description" content="home page" />
+  <meta name="description" content="search and pick github emoji" />
 </svelte:head>
 
 <section>
-  <h1 my-0>Pick Github Emojis</h1>
+  <h1 class="my-0 text-2rem dark:text-gray-200">Search Github Emojis</h1>
+  <div class="my-3">
+    <button
+      class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
+      on:click={toggleTheme}
+    >
+      {#if currentTheme === "light" || currentTheme === "auto"}
+        <div class="scale-180" i-carbon-sun />
+      {:else}
+        <div class="scale-180" i-carbon-moon />
+      {/if}
+    </button>
+    <a
+      class="ml-3 c-gray-600 dark:c-gray-400"
+      hover="c-black"
+      dark:hover="c-white"
+      rel="noreferrer"
+      href="https://github.com/guxuerui/emoji-picker"
+      target="_blank"
+      title="GitHub"
+    >
+      <span class="scale-160" i-carbon-logo-github />
+    </a>
+  </div>
   <input
     type="text"
-    bind:value={searchValue}
     on:keyup={searchEmojis(searchValue)}
+    bind:value={searchValue}
+    class="bg-gray-50 border-0 ring-0 text-gray-900 text-sm rounded-lg px-4 py-2 w-1/2 dark:bg-gray/10 dark:placeholder-gray-400 dark:text-white"
+    my-4
     placeholder="search emoji..."
-    my-6
   />
+  <div bg-white dark:bg-black rounded-2xl pt-4>
+    {#if categoriesData.length}
+      <div px-4>
+        {#each categoriesData as category, index}
+          <button
+            on:click={() => handleClickCategory(index)}
+            class:!bg-gray-200={lightActiveIcon === index}
+            class:dark:!bg-gray-700={activeIcon === index}
+            class="pa-0 border-0 w-6 h-6 bg-transparent scale-150 rounded-50 justify-center items-center"
+            mr-3
+            hover="cursor-pointer bg-gray-200"
+            dark:hover="bg-gray-700"
+          >
+            {category.emojis[0].icon}
+          </button>
+        {/each}
+      </div>
+    {/if}
 
-  <div>
-    <button on:click={() => filterEmojis("people")}>People</button>
-    <button on:click={() => filterEmojis("animals")}>Animals</button>
-    <button on:click={() => filterEmojis("food")}>Food</button>
-    <button on:click={() => filterEmojis("nature")}>Nature</button>
-    <button on:click={() => filterEmojis("weather")}>Weather</button>
-    <button on:click={() => filterEmojis("travel")}>Travel</button>
-    <button on:click={() => filterEmojis("objects")}>Sports</button>
-    <button on:click={() => filterEmojis("music")}>Music</button>
+    <div border-b="1 solid #aaa/40" mt-3 mb-2 />
+
+    {#if searchedEmojis.length}
+      <ul
+        p="l-0 t-0 r-1 b-1"
+        m="y-3 x-2"
+        class="w-xs h-xs overflow-y-auto grid grid-cols-10"
+      >
+        {#each searchedEmojis as emoji}
+          <li
+            class="list-none w-9 h-9 rounded-50 flex justify-center items-center"
+            hover="cursor-pointer bg-gray-200"
+            dark:hover="bg-gray-700"
+            on:mouseenter={handleMouseOver(emoji)}
+          >
+            <span text-1.5rem>{emoji.icon}</span>
+          </li>
+        {/each}
+      </ul>
+    {:else}
+      <div
+        text-gray-700
+        dark:text-gray-200
+        p="l-0 t-0 r-1 b-1"
+        m="y-3 x-2"
+        class="w-xs h-xs flex justify-center items-center"
+      >
+        No results...
+      </div>
+    {/if}
   </div>
-
-  {#if emojisArr.length}
-    <ul>
-      {#each emojisArr as emoji}
-        <li>
-          <img src={emoji.url} alt={emoji} />
-          {emoji.name}
-        </li>
-      {/each}
-    </ul>
-  {:else}
-    <p>Loading...</p>
-  {/if}
 </section>
 
 <style>
@@ -111,5 +197,8 @@
     justify-content: center;
     align-items: center;
     flex: 0.6;
+  }
+  section ul::-webkit-scrollbar {
+    display: none;
   }
 </style>
