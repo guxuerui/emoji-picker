@@ -30,12 +30,6 @@ body {
 		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 50%);
 }
 
-h1,
-h2,
-p {
-	font-weight: 400;
-}
-
 p {
 	line-height: 1.5;
 }
@@ -47,15 +41,6 @@ a {
 
 a:hover {
 	text-decoration: underline;
-}
-
-h1 {
-	font-size: 2rem;
-	text-align: center;
-}
-
-h2 {
-	font-size: 1rem;
 }
 
 pre {
@@ -86,12 +71,6 @@ button {
 
 button:focus:not(:focus-visible) {
 	outline: none;
-}
-
-@media (min-width: 720px) {
-	h1 {
-		font-size: 2.4rem;
-	}
 }
 
 .visually-hidden {
