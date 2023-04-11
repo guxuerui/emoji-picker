@@ -1,0 +1,25 @@
+{
+  "extends": "./.svelte-kit/tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "ignoreDeprecations": "5.0",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "types": [
+      "vite/client"
+    ],
+    "noImplicitAny": true
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}
