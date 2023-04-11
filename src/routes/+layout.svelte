@@ -3,7 +3,7 @@
   import "./styles.css";
 </script>
 
-<div class="app">
+<div class="app dark:bg-black/90">
   <main>
     <slot />
   </main>
