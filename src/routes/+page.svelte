@@ -140,18 +140,19 @@
   />
   <div bg-white dark:bg-black rounded-2xl pt-4>
     {#if categoriesData.length}
-      <div px-4>
+      <div px-4 flex="~ gap-x-4">
         {#each categoriesData as category, index}
           <button
             on:click={() => handleClickCategory(index)}
             class:!bg-gray-200={lightActiveIcon === index}
             class:dark:!bg-gray-700={activeIcon === index}
-            class="pa-0 border-0 w-6 h-6 bg-transparent scale-150 rounded-50 justify-center items-center"
-            mr-3
+            class="pa-0 border-0 w-6 h-6 bg-transparent scale-150 rounded-50 transition-colors"
             hover="cursor-pointer bg-gray-200"
             dark:hover="bg-gray-700"
           >
-            {category.emojis[0].icon}
+            <span class="relative left-0.5 bottom-0.38"
+              >{category.emojis[0].icon}</span
+            >
           </button>
         {/each}
       </div>
@@ -167,12 +168,12 @@
       >
         {#each searchedEmojis as emoji}
           <li
-            class="list-none w-9 h-9 rounded-50 flex justify-center items-center"
+            class="list-none w-9 h-9 rounded-50 flex justify-center items-center transition-colors"
             hover="cursor-pointer bg-gray-200"
             dark:hover="bg-gray-700"
             on:mouseenter={handleMouseOver(emoji)}
           >
-            <span text-1.5rem>{emoji.icon}</span>
+            <span class="mt-0.1rem text-1.5rem">{emoji.icon}</span>
           </li>
         {/each}
       </ul>
