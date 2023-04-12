@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { toast } from "svoast";
   import Line from "$lib/components/Line.svelte";
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
   import type { IEmoji } from "$lib/types";
@@ -57,7 +58,7 @@
       } else {
         await navigator.clipboard.writeText(`:${emoji.name}:`);
       }
-      alert("Emoji shortcode copied to clipboard!");
+      toast.success("Emoji shortcode copied to clipboard!");
     } catch (error) {
       console.log(error);
     }
@@ -188,8 +189,8 @@
       <div
         text-gray-700
         dark:text-gray-200
-        p="l-0 t-0 r-1 b-1"
-        m="y-3 x-2"
+        pa-0
+        mx-auto
         class="w-xs h-xs flex justify-center items-center"
       >
         No results...
