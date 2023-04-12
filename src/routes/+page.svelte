@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import Line from '$lib/components/Line.svelte';
   import type { IEmoji } from "$lib/types";
 
   async function fetchEmojis() {
@@ -9,12 +10,20 @@
     return response.json();
   }
 
+  let pageTitle = "Search Github Emojis";
   let emojisData: IEmoji[] = [];
   let searchedEmojis: IEmoji[] = [];
   let categoriesData: any[] = [];
   let searchValue = "";
   let activeIcon = 0;
   let lightActiveIcon = 0;
+  let currentEmoji: IEmoji = {
+    name: '',
+    icon: '',
+    keywords: [],
+    title: '',
+  };
+  let showCurrentEmoji = false;
 
   function searchEmojis(searchValue: string) {
     if (!searchValue) {
@@ -40,6 +49,8 @@
 
   function handleMouseOver(emoji: IEmoji) {
     console.log("emoji: ", emoji);
+    currentEmoji = emoji;
+    showCurrentEmoji = true;
   }
 
   $: currentTheme = "";
@@ -69,6 +80,7 @@
         name: key,
         icon: value?.skins[0].native,
         keywords: value?.keywords,
+        title: value?.name,
       };
     });
 
@@ -101,12 +113,12 @@
 </script>
 
 <svelte:head>
-  <title>Home</title>
+  <title>{pageTitle}</title>
   <meta name="description" content="search and pick github emoji" />
 </svelte:head>
 
 <section>
-  <h1 class="my-0 text-2rem dark:text-gray-200">Search Github Emojis</h1>
+  <h1 class="my-0 text-2.5rem dark:text-gray-200 page-title">{pageTitle}</h1>
   <div class="my-3">
     <button
       class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
@@ -140,7 +152,7 @@
   />
   <div bg-white dark:bg-black rounded-2xl pt-4>
     {#if categoriesData.length}
-      <div px-4 flex="~ gap-x-4">
+      <div pl-4 flex="~ gap-x-4">
         {#each categoriesData as category, index}
           <button
             on:click={() => handleClickCategory(index)}
@@ -150,30 +162,31 @@
             hover="cursor-pointer bg-gray-200"
             dark:hover="bg-gray-700"
           >
-            <span class="relative left-0.5 bottom-0.38"
-              >{category.emojis[0].icon}</span
-            >
+            <span class="relative left-0.5 bottom-0.38">
+              {category.emojis[0].icon}
+            </span>
           </button>
         {/each}
       </div>
     {/if}
 
-    <div border-b="1 solid #aaa/40" mt-3 mb-2 />
+    <Line />
 
     {#if searchedEmojis.length}
       <ul
-        p="l-0 t-0 r-1 b-1"
-        m="y-3 x-2"
-        class="w-xs h-xs overflow-y-auto grid grid-cols-10"
+        pa-0 my-0 mx-auto
+        w-sm h-xs
+        overflow-y-auto
       >
         {#each searchedEmojis as emoji}
           <li
-            class="list-none w-9 h-9 rounded-50 flex justify-center items-center transition-colors"
+            class="list-none w-8 h-8 rounded-50 transition-colors float-left text-center"
             hover="cursor-pointer bg-gray-200"
             dark:hover="bg-gray-700"
             on:mouseenter={handleMouseOver(emoji)}
+            on:mouseleave={() => showCurrentEmoji = false}
           >
-            <span class="mt-0.1rem text-1.5rem">{emoji.icon}</span>
+            <div class="mt-0.2rem text-1.5rem">{emoji.icon}</div>
           </li>
         {/each}
       </ul>
@@ -188,6 +201,22 @@
         No results...
       </div>
     {/if}
+
+    <Line />
+
+    <div text-gray-700 dark:text-gray-400 min-h-3rem pl-4 w-sm overflow-x-hidden class="flex items-center justify-between">
+      {#if showCurrentEmoji}
+        <div class="flex">
+          <div class="text-2xl">{currentEmoji.icon}</div>
+          <div class="px-2">
+            <div>{currentEmoji.title}</div>
+            <div>{currentEmoji.name}</div>
+          </div>
+        </div>
+      {:else}
+        Click to pick a emoji...
+      {/if}
+    </div>
   </div>
 </section>
 
@@ -198,6 +227,12 @@
     justify-content: center;
     align-items: center;
     flex: 0.6;
+  }
+  .page-title {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
   }
   section ul::-webkit-scrollbar {
     display: none;
