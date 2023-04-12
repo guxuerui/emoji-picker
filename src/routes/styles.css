@@ -84,6 +84,7 @@ button:focus:not(:focus-visible) {
 	white-space: nowrap;
 }
 
+/* for svoast */
 .svoast-message {
   line-height: 22px;
 }

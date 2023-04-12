@@ -60,7 +60,7 @@
       }
       toast.success("Emoji shortcode copied to clipboard!");
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   }
 
