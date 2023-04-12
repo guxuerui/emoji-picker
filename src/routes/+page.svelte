@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import Line from '$lib/components/Line.svelte';
   import type { IEmoji } from "$lib/types";
+  import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
 
   async function fetchEmojis() {
     const response = await fetch(
@@ -51,23 +52,6 @@
     console.log("emoji: ", emoji);
     currentEmoji = emoji;
     showCurrentEmoji = true;
-  }
-
-  $: currentTheme = "";
-
-  function toggleTheme() {
-    if (currentTheme === "light" || currentTheme === "auto") {
-      localStorage.setItem("color-schema", "dark");
-      document.documentElement.classList.add("dark");
-    } else {
-      localStorage.setItem("color-schema", "light");
-      document.documentElement.classList.remove("dark");
-    }
-    loadTheme();
-  }
-
-  function loadTheme() {
-    currentTheme = localStorage.getItem("color-schema") || "auto";
   }
 
   onMount(async () => {
@@ -174,7 +158,7 @@
 
     {#if searchedEmojis.length}
       <ul
-        pa-0 my-0 mx-auto
+        pa-0 mt-2 mx-auto
         w-sm h-xs
         overflow-y-auto
       >
