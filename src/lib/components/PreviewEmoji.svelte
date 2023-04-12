@@ -1,16 +1,24 @@
 <script lang="ts">
-  import type { IEmoji } from '$lib/types/index';
+  import type { IEmoji } from "$lib/types/index";
 
   export let showCurrentEmoji = false;
   export let currentEmoji: IEmoji = {
-    name: '',
-    icon: '',
+    name: "",
+    icon: "",
     keywords: [],
-    title: '',
+    title: "",
   };
 </script>
 
-<div text-gray-700 dark:text-gray-400 min-h-3rem pl-4 w-sm overflow-x-hidden class="flex items-center justify-between">
+<div
+  text-gray-700
+  dark:text-gray-400
+  min-h-3rem
+  pl-4
+  w-sm
+  overflow-x-hidden
+  class="flex items-center justify-between"
+>
   {#if showCurrentEmoji}
     <div class="flex">
       <div class="text-2xl">{currentEmoji.icon}</div>
@@ -20,6 +28,7 @@
       </div>
     </div>
   {:else}
-    Click to pick a emoji...
+    Click to pick an emoji...
   {/if}
 </div>
+
