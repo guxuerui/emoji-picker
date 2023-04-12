@@ -3,14 +3,10 @@
   import Line from "$lib/components/Line.svelte";
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
   import type { IEmoji } from "$lib/types";
+  import type { PageData } from "./$types";
   import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
 
-  async function fetchEmojis() {
-    const response = await fetch(
-      "https://cdn.jsdelivr.net/npm/@emoji-mart/data"
-    );
-    return response.json();
-  }
+  export let data: PageData;
 
   let pageTitle = "Search Github Emojis";
   let emojisData: IEmoji[] = [];
@@ -71,17 +67,19 @@
     loadTheme();
 
     // handle emojis data
-    const data = await fetchEmojis();
-    emojisData = Object.entries(data.emojis as any[]).map(([key, value]) => {
-      return {
-        name: key,
-        icon: value?.skins[0].native,
-        keywords: value?.keywords,
-        title: value?.name,
-      };
-    });
+    const fetchData = data.jsonData;
+    emojisData = Object.entries(fetchData.emojis as any[]).map(
+      ([key, value]) => {
+        return {
+          name: key,
+          icon: value?.skins[0].native,
+          keywords: value?.keywords,
+          title: value?.name,
+        };
+      }
+    );
 
-    const emojisCategories: any[] = data.categories;
+    const emojisCategories: any[] = fetchData.categories;
     function handleEmojiCaegories(category: any) {
       let currCategoriesData: any[] = [];
       for (let i = 0; i < category.emojis.length; i++) {
@@ -163,7 +161,7 @@
         type="text"
         on:keyup={searchEmojis(searchValue)}
         bind:value={searchValue}
-        class="bg-gray-50 border-0 ring-0 text-gray-900 text-sm rounded-xl px-4 py-2 mt-3 w-6/7 dark:bg-gray/30 dark:placeholder-gray-400 dark:text-white"
+        class="bg-gray-200 border-0 ring-0 text-gray-900 text-sm rounded-xl px-4 py-2 mt-3 w-6/7 dark:bg-gray/30 dark:placeholder-gray-400 dark:text-white"
         placeholder="search emoji..."
       />
     </div>
