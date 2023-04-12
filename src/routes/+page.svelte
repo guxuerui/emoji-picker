@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import Line from '$lib/components/Line.svelte';
-  import PreviewEmoji from '$lib/components/PreviewEmoji.svelte';
+  import Line from "$lib/components/Line.svelte";
+  import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
   import type { IEmoji } from "$lib/types";
   import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
 
@@ -20,10 +20,10 @@
   let activeIcon = 0;
   let lightActiveIcon = 0;
   let currentEmoji: IEmoji = {
-    name: '',
-    icon: '',
+    name: "",
+    icon: "",
     keywords: [],
-    title: '',
+    title: "",
   };
   let showCurrentEmoji = false;
 
@@ -50,9 +50,21 @@
   }
 
   function handleMouseOver(emoji: IEmoji) {
-    console.log("emoji: ", emoji);
     currentEmoji = emoji;
     showCurrentEmoji = true;
+  }
+
+  async function handlePickEmoji(emoji: IEmoji) {
+    try {
+      if (navigator.canShare) {
+        await navigator.share({ title: emoji.title, text: emoji.name });
+      } else {
+        await navigator.clipboard.writeText(`:${emoji.name}:`);
+      }
+      alert("Emoji shortcode copied to clipboard!");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   onMount(async () => {
@@ -103,7 +115,7 @@
 </svelte:head>
 
 <section>
-  <h1 class="my-0 text-2.5rem dark:text-gray-200 page-title">{pageTitle}</h1>
+  <h1 class="my-2 text-2.5rem dark:text-gray-200 page-title">{pageTitle}</h1>
   <div class="my-3">
     <button
       class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
@@ -158,20 +170,21 @@
     <Line />
 
     {#if searchedEmojis.length}
-      <ul
-        pa-0 mt-2 mx-auto
-        w-sm h-xs
-        overflow-y-auto
-      >
+      <ul pa-0 mt-2 mx-auto w-sm h-xs overflow-y-auto>
         {#each searchedEmojis as emoji}
           <li
             class="list-none w-8 h-8 rounded-50 transition-colors float-left text-center"
             hover="cursor-pointer bg-gray-200"
             dark:hover="bg-gray-700"
             on:mouseenter={handleMouseOver(emoji)}
-            on:mouseleave={() => showCurrentEmoji = false}
+            on:mouseleave={() => (showCurrentEmoji = false)}
           >
-            <div class="mt-0.1rem text-1.5rem">{emoji.icon}</div>
+            <button
+              on:click={() => handlePickEmoji(emoji)}
+              class="mt-0.1rem mx-auto pa-0 text-1.5rem bg-transparent border-0 hover:cursor-pointer"
+            >
+              {emoji.icon}
+            </button>
           </li>
         {/each}
       </ul>
@@ -189,7 +202,7 @@
 
     <Line />
 
-    <PreviewEmoji showCurrentEmoji={showCurrentEmoji} currentEmoji={currentEmoji} />
+    <PreviewEmoji {showCurrentEmoji} {currentEmoji} />
   </div>
 </section>
 
@@ -205,7 +218,21 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(to right, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-image: linear-gradient(
+      to right,
+      #d16ba5,
+      #c777b9,
+      #ba83ca,
+      #aa8fd8,
+      #9a9ae1,
+      #8aa7ec,
+      #79b3f4,
+      #69bff8,
+      #52cffe,
+      #41dfff,
+      #46eefa,
+      #5ffbf1
+    );
   }
   section ul::-webkit-scrollbar {
     display: none;
