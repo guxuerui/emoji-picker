@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Line from '$lib/components/Line.svelte';
+  import PreviewEmoji from '$lib/components/PreviewEmoji.svelte';
   import type { IEmoji } from "$lib/types";
   import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
 
@@ -170,7 +171,7 @@
             on:mouseenter={handleMouseOver(emoji)}
             on:mouseleave={() => showCurrentEmoji = false}
           >
-            <div class="mt-0.2rem text-1.5rem">{emoji.icon}</div>
+            <div class="mt-0.1rem text-1.5rem">{emoji.icon}</div>
           </li>
         {/each}
       </ul>
@@ -188,19 +189,7 @@
 
     <Line />
 
-    <div text-gray-700 dark:text-gray-400 min-h-3rem pl-4 w-sm overflow-x-hidden class="flex items-center justify-between">
-      {#if showCurrentEmoji}
-        <div class="flex">
-          <div class="text-2xl">{currentEmoji.icon}</div>
-          <div class="px-2">
-            <div>{currentEmoji.title}</div>
-            <div>{currentEmoji.name}</div>
-          </div>
-        </div>
-      {:else}
-        Click to pick a emoji...
-      {/if}
-    </div>
+    <PreviewEmoji showCurrentEmoji={showCurrentEmoji} currentEmoji={currentEmoji} />
   </div>
 </section>
 
