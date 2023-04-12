@@ -116,7 +116,7 @@
 
 <section>
   <h1 class="my-2 text-2.5rem dark:text-gray-200 page-title">{pageTitle}</h1>
-  <div class="my-3">
+  <div class="mb-4">
     <button
       class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
       on:click={toggleTheme}
@@ -139,14 +139,6 @@
       <span class="scale-160" i-carbon-logo-github />
     </a>
   </div>
-  <input
-    type="text"
-    on:keyup={searchEmojis(searchValue)}
-    bind:value={searchValue}
-    class="bg-gray-50 border-0 ring-0 text-gray-900 text-sm rounded-lg px-4 py-2 w-1/2 dark:bg-gray/10 dark:placeholder-gray-400 dark:text-white"
-    my-4
-    placeholder="search emoji..."
-  />
   <div bg-white dark:bg-black rounded-2xl pt-4>
     {#if categoriesData.length}
       <div pl-2 flex="~ gap-x-1">
@@ -166,7 +158,15 @@
     {/if}
 
     <Line />
-
+    <div text-center w-full>
+      <input
+        type="text"
+        on:keyup={searchEmojis(searchValue)}
+        bind:value={searchValue}
+        class="bg-gray-50 border-0 ring-0 text-gray-900 text-sm rounded-xl px-4 py-2 mt-3 w-6/7 dark:bg-gray/30 dark:placeholder-gray-400 dark:text-white"
+        placeholder="search emoji..."
+      />
+    </div>
     {#if searchedEmojis.length}
       <ul pa-0 mt-2 mx-auto w-sm h-xs overflow-y-auto>
         {#each searchedEmojis as emoji}
