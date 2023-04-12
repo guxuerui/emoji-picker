@@ -3,6 +3,8 @@
   import { toast } from "svoast";
   import Line from "$lib/components/Line.svelte";
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
+  import { tooltip } from "svooltip";
+  import "svooltip/styles.css";
   import type { IEmoji } from "$lib/types";
   import type { PageData } from "./$types";
   import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
@@ -93,11 +95,22 @@
     }
 
     for (let i = 0; i < emojisCategories.length; i++) {
+      let currentEmojiId = "";
+      if (emojisCategories[i].id === "people") {
+        currentEmojiId = "Smileys & People";
+      } else if (emojisCategories[i].id === "nature") {
+        currentEmojiId = "Animals & Nature";
+      } else {
+        currentEmojiId =
+          emojisCategories[i].id.charAt(0).toUpperCase() +
+          emojisCategories[i].id.slice(1);
+      }
+
       categoriesData = [
         ...categoriesData,
         ...[
           {
-            id: emojisCategories[i].id,
+            id: currentEmojiId,
             emojis: handleEmojiCaegories(emojisCategories[i]),
           },
         ],
@@ -140,9 +153,13 @@
   </div>
   <div bg-white dark:bg-black rounded-2xl pt-4>
     {#if categoriesData.length}
-      <div pl-2 flex="~ gap-x-1">
+      <div pl-2 flex="~ gap-x-2">
         {#each categoriesData as category, index}
           <button
+            use:tooltip={{
+              content: `<strong class="font-bold pa-2">${category.id}</strong>`,
+              html: true,
+            }}
             on:click={() => handleClickCategory(index)}
             class:!bg-gray-200={lightActiveIcon === index}
             class:dark:!bg-gray-700={activeIcon === index}
@@ -200,6 +217,22 @@
     <Line />
 
     <PreviewEmoji {showCurrentEmoji} {currentEmoji} />
+  </div>
+
+  <div mt-4 text-gray-600 dark:text-gray-300>
+    Made by
+    <a
+      border="0 b-1 dashed #aaa"
+      hover:border="#000"
+      dark:hover:border="#fff"
+      class="page-title transition-colors"
+      rel="noreferrer"
+      href="https://www.guxuerui.cn"
+      target="_blank"
+      title="MyBlog"
+    >
+      guxuerui
+    </a>
   </div>
 </section>
 
