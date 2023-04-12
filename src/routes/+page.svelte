@@ -149,19 +149,17 @@
   />
   <div bg-white dark:bg-black rounded-2xl pt-4>
     {#if categoriesData.length}
-      <div pl-4 flex="~ gap-x-4">
+      <div pl-2 flex="~ gap-x-1">
         {#each categoriesData as category, index}
           <button
             on:click={() => handleClickCategory(index)}
             class:!bg-gray-200={lightActiveIcon === index}
             class:dark:!bg-gray-700={activeIcon === index}
-            class="pa-0 border-0 w-6 h-6 bg-transparent scale-150 rounded-50 transition-colors"
+            class="pa-0 pt-0.2rem border-0 w-9 h-9 bg-transparent rounded-50 transition-colors text-center text-1.5rem"
             hover="cursor-pointer bg-gray-200"
             dark:hover="bg-gray-700"
           >
-            <span class="relative left-0.5 bottom-0.38">
-              {category.emojis[0].icon}
-            </span>
+            {category.emojis[0].icon}
           </button>
         {/each}
       </div>
