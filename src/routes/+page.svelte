@@ -55,14 +55,13 @@
 
   async function handlePickEmoji(emoji: IEmoji) {
     try {
-      if (navigator.canShare) {
-        await navigator.share({ title: emoji.title, text: emoji.name });
-      } else {
-        await navigator.clipboard.writeText(`:${emoji.name}:`);
-      }
+      navigator?.canShare
+        ? await navigator.share({ title: emoji.title, text: emoji.name })
+        : await navigator.clipboard.writeText(`:${emoji.name}:`);
+
       toast.success("Emoji shortcode copied to clipboard!");
     } catch (error) {
-      toast.error(error);
+      toast.error(error.toString());
     }
   }
 
