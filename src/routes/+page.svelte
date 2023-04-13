@@ -144,7 +144,7 @@
       dark="text-white"
       dark:hover="border-red-500 bg-red-500"
       hover="text-white cursor-pointer bg-red-800"
-      border="0.1 border-red-700 rounded-lg"
+      border="red-700 rounded-lg"
       text="sm font-medium"
       p="x-2 y-1"
       transition
