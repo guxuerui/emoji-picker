@@ -36,5 +36,8 @@
     "unocss": "^0.50.6",
     "vite": "^4.2.1"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "sveltekit-i18n": "^2.2.2"
+  }
 }
