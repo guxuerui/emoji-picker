@@ -8,7 +8,7 @@
   import type { IEmoji } from "$lib/types";
   import type { PageData } from "./$types";
   import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
-  import { t, locale, locales } from "$lib/translations/i18n";
+  import { t, locale } from "$lib/translations/i18n";
 
   export let data: PageData;
 
@@ -59,7 +59,7 @@
         ? await navigator.share({ title: emoji.title, text: emoji.name })
         : await navigator.clipboard.writeText(`:${emoji.name}:`);
 
-      toast.success("Emoji shortcode copied to clipboard!");
+      toast.success($t("homepage.copyToast"));
     } catch (error) {
       toast.error(error.toString());
     }
@@ -126,12 +126,22 @@
 </svelte:head>
 
 <section>
-  <h1 class="my-2 text-2.5rem dark:text-gray-200 page-title">
+  <h1
+    class="my-2 text-2.5rem dark:text-gray-200 page-title"
+    class:!text-2.05rem={$locale === "cn"}
+  >
     {$t("homepage.title")}
   </h1>
   <div class="mt-2 mb-4 text-center">
     <button
-      class="dark:text-white border border-blue-700 bg-transparent hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-1 mr-2 dark:border-blue-500 dark:hover:bg-blue-500 hover:text-white hover:cursor-pointer"
+      bg="transparent"
+      dark="text-white"
+      dark:hover="bg-#199"
+      hover="text-white cursor-pointer bg-#199"
+      border="1 #199 rounded-lg"
+      text="sm font-medium"
+      p="x-2 y-1"
+      mr-2
       transition
       class:active={$locale === "en"}
       on:click={() => ($locale = "en")}
@@ -142,13 +152,12 @@
     <button
       bg="transparent"
       dark="text-white"
-      dark:hover="border-red-500 bg-red-500"
-      hover="text-white cursor-pointer bg-red-800"
-      border="red-700 rounded-lg"
+      dark:hover="bg-#199"
+      hover="text-white cursor-pointer bg-#199"
+      border="1 #199 rounded-lg"
       text="sm font-medium"
       p="x-2 y-1"
       transition
-      focus="outline-none"
       class:active={$locale === "cn"}
       on:click={() => ($locale = "cn")}
     >
@@ -295,8 +304,8 @@
     display: none;
   }
   .active {
-    background-color: #d16ba5;
+    background-color: #199;
     color: #fff;
-    border: none;
+    border-color: #199;
   }
 </style>
