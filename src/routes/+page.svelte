@@ -8,10 +8,10 @@
   import type { IEmoji } from "$lib/types";
   import type { PageData } from "./$types";
   import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
+  import { t, locale, locales } from "$lib/translations/i18n";
 
   export let data: PageData;
 
-  let pageTitle = "Search Github Emojis";
   let emojisData: IEmoji[] = [];
   let searchedEmojis: IEmoji[] = [];
   let categoriesData: any[] = [];
@@ -121,12 +121,40 @@
 </script>
 
 <svelte:head>
-  <title>{pageTitle}</title>
+  <title>{$t("homepage.title")}</title>
   <meta name="description" content="search and pick github emoji" />
 </svelte:head>
 
 <section>
-  <h1 class="my-2 text-2.5rem dark:text-gray-200 page-title">{pageTitle}</h1>
+  <h1 class="my-2 text-2.5rem dark:text-gray-200 page-title">
+    {$t("homepage.title")}
+  </h1>
+  <div class="mt-2 mb-4 text-center">
+    <button
+      class="dark:text-white border border-blue-700 bg-transparent hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-2 py-1 mr-2 dark:border-blue-500 dark:hover:bg-blue-500 hover:text-white hover:cursor-pointer"
+      transition
+      class:active={$locale === "en"}
+      on:click={() => ($locale = "en")}
+    >
+      English
+    </button>
+
+    <button
+      bg="transparent"
+      dark="text-white"
+      dark:hover="border-red-500 bg-red-500"
+      hover="text-white cursor-pointer bg-red-800"
+      border="0.1 border-red-700 rounded-lg"
+      text="sm font-medium"
+      p="x-2 y-1"
+      transition
+      focus="outline-none"
+      class:active={$locale === "cn"}
+      on:click={() => ($locale = "cn")}
+    >
+      简体中文
+    </button>
+  </div>
   <div class="mb-4">
     <button
       class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
@@ -179,7 +207,7 @@
         on:keyup={searchEmojis(searchValue)}
         bind:value={searchValue}
         class="bg-gray-200 border-0 ring-0 text-gray-900 text-sm rounded-xl px-4 py-2 mt-3 w-6/7 dark:bg-gray/30 dark:placeholder-gray-400 dark:text-white"
-        placeholder="search emoji..."
+        placeholder={$t("homepage.search")}
       />
     </div>
     {#if searchedEmojis.length}
@@ -209,7 +237,7 @@
         mx-auto
         class="w-xs h-xs flex justify-center items-center"
       >
-        No results...
+        {$t("homepage.nodata")}
       </div>
     {/if}
 
@@ -265,5 +293,10 @@
   }
   section ul::-webkit-scrollbar {
     display: none;
+  }
+  .active {
+    background-color: #d16ba5;
+    color: #fff;
+    border: none;
   }
 </style>
