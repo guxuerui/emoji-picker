@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t } from "$lib/translations/i18n";
   import type { IEmoji } from "$lib/types/index";
 
   export let showCurrentEmoji = false;
@@ -28,7 +29,6 @@
       </div>
     </div>
   {:else}
-    Click to pick an emoji...
+    {$t("homepage.hint")}
   {/if}
 </div>
-
