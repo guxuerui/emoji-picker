@@ -7,7 +7,6 @@ specifiers:
   '@iconify/utils': ^2.0.6
   '@neoconfetti/svelte': ^1.0.0
   '@sveltejs/adapter-auto': ^1.0.0
-  '@sveltejs/adapter-netlify': ^2.0.6
   '@sveltejs/adapter-vercel': ^1.0.0
   '@sveltejs/kit': ^1.0.0
   '@types/cookie': ^0.5.1
@@ -41,7 +40,6 @@ devDependencies:
   '@iconify/utils': 2.0.6
   '@neoconfetti/svelte': 1.0.0
   '@sveltejs/adapter-auto': 1.0.0_@sveltejs+kit@1.0.0
-  '@sveltejs/adapter-netlify': 2.0.6_@sveltejs+kit@1.0.0
   '@sveltejs/kit': 1.0.0_svelte@3.58.0+vite@4.2.1
   '@types/cookie': 0.5.1
   '@typescript-eslint/eslint-plugin': 5.46.1_z24sz2fazj3bxoipp6m4s7b2mi
@@ -93,6 +91,7 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/android-arm/0.17.15:
@@ -109,6 +108,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/android-arm64/0.17.15:
@@ -125,6 +125,7 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/android-x64/0.17.15:
@@ -141,6 +142,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/darwin-arm64/0.17.15:
@@ -157,6 +159,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/darwin-x64/0.17.15:
@@ -173,6 +176,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/freebsd-arm64/0.17.15:
@@ -189,6 +193,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/freebsd-x64/0.17.15:
@@ -205,6 +210,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-arm/0.17.15:
@@ -221,6 +227,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-arm64/0.17.15:
@@ -237,6 +244,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-ia32/0.17.15:
@@ -253,6 +261,7 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-loong64/0.17.15:
@@ -269,6 +278,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-mips64el/0.17.15:
@@ -285,6 +295,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-ppc64/0.17.15:
@@ -301,6 +312,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-riscv64/0.17.15:
@@ -317,6 +329,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-s390x/0.17.15:
@@ -333,6 +346,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/linux-x64/0.17.15:
@@ -349,6 +363,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/netbsd-x64/0.17.15:
@@ -365,6 +380,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/openbsd-x64/0.17.15:
@@ -381,6 +397,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/sunos-x64/0.17.15:
@@ -397,6 +414,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/win32-arm64/0.17.15:
@@ -413,6 +431,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/win32-ia32/0.17.15:
@@ -429,6 +448,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@esbuild/win32-x64/0.17.15:
@@ -508,10 +528,6 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
-    dev: true
-
-  /@iarna/toml/2.2.5:
-    resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
     dev: true
 
   /@iconify-json/carbon/1.1.16:
@@ -659,17 +675,6 @@ packages:
     dependencies:
       '@sveltejs/kit': 1.0.0_svelte@3.58.0+vite@4.2.1
       import-meta-resolve: 2.2.0
-    dev: true
-
-  /@sveltejs/adapter-netlify/2.0.6_@sveltejs+kit@1.0.0:
-    resolution: {integrity: sha512-9guxI9jG/v/JTr/I1E1YGKppKWRyvs60VuhPJcGBrj2MfoBxR40vhxkrWPFcNJoAdyQUSjqxbg7sZLA4WbNfgA==}
-    peerDependencies:
-      '@sveltejs/kit': ^1.5.0
-    dependencies:
-      '@iarna/toml': 2.2.5
-      '@sveltejs/kit': 1.0.0_svelte@3.58.0+vite@4.2.1
-      esbuild: 0.16.17
-      set-cookie-parser: 2.5.1
     dev: true
 
   /@sveltejs/adapter-vercel/1.0.0_@sveltejs+kit@1.0.0:
@@ -1446,6 +1451,7 @@ packages:
       '@esbuild/win32-arm64': 0.16.17
       '@esbuild/win32-ia32': 0.16.17
       '@esbuild/win32-x64': 0.16.17
+    dev: false
 
   /esbuild/0.17.15:
     resolution: {integrity: sha512-LBUV2VsUIc/iD9ME75qhT4aJj0r75abCVS0jakhFzOtR7TQsqQA5w0tZ+KTKnwl3kXE0MhskNdHDh/I5aCR1Zw==}
