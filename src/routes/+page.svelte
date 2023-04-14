@@ -3,6 +3,7 @@
   import { toast } from "svoast";
   import Line from "$lib/components/Line.svelte";
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
+  import HandleLocale from "$lib/components/HandleLocale.svelte";
   import { tooltip } from "svooltip";
   import "svooltip/styles.css";
   import type { IEmoji } from "$lib/types";
@@ -132,38 +133,9 @@
   >
     {$t("homepage.title")}
   </h1>
-  <div class="mt-2 mb-4 text-center">
-    <button
-      bg="transparent"
-      dark="text-white"
-      dark:hover="bg-#199"
-      hover="text-white cursor-pointer bg-#199"
-      border="1 #199 rounded-lg"
-      text="sm font-medium"
-      p="x-2 y-1"
-      mr-2
-      transition
-      class:active={$locale === "en"}
-      on:click={() => ($locale = "en")}
-    >
-      English
-    </button>
 
-    <button
-      bg="transparent"
-      dark="text-white"
-      dark:hover="bg-#199"
-      hover="text-white cursor-pointer bg-#199"
-      border="1 #199 rounded-lg"
-      text="sm font-medium"
-      p="x-2 y-1"
-      transition
-      class:active={$locale === "cn"}
-      on:click={() => ($locale = "cn")}
-    >
-      简体中文
-    </button>
-  </div>
+  <HandleLocale />
+
   <div class="mb-4">
     <button
       class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
@@ -302,10 +274,5 @@
   }
   section ul::-webkit-scrollbar {
     display: none;
-  }
-  .active {
-    background-color: #199;
-    color: #fff;
-    border-color: #199;
   }
 </style>
