@@ -9,9 +9,7 @@ const config = {
   preprocess: preprocess(),
   // preprocess: vitePreprocess(),
   kit: {
-    adapter: adapter({
-      runtime: 'nodejs18.x',
-    }),
+    adapter: adapter(),
   },
   vitePlugin: {
     experimental: {
