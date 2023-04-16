@@ -4,12 +4,12 @@
   import Line from "$lib/components/Line.svelte";
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
   import HandleLocale from "$lib/components/HandleLocale.svelte";
+  import HandleTheme from "$lib/components/HandleTheme.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import { tooltip } from "svooltip";
   import "svooltip/styles.css";
   import type { IEmoji } from "$lib/types";
   import type { PageData } from "./$types";
-  import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
   import { t, locale } from "$lib/translations/i18n";
 
   export let data: PageData;
@@ -68,8 +68,6 @@
   }
 
   onMount(async () => {
-    loadTheme();
-
     // handle emojis data
     const fetchData = data.jsonData;
     emojisData = Object.entries(fetchData.emojis as any[]).map(
@@ -137,29 +135,8 @@
 
   <HandleLocale />
 
-  <div class="mb-4">
-    <button
-      class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
-      on:click={toggleTheme}
-    >
-      {#if currentTheme === "light" || currentTheme === "auto"}
-        <div class="scale-180" i-carbon-sun />
-      {:else}
-        <div class="scale-180" i-carbon-moon />
-      {/if}
-    </button>
-    <a
-      class="ml-3 c-gray-600 dark:c-gray-400"
-      hover="c-black"
-      dark:hover="c-white"
-      rel="noreferrer"
-      href="https://github.com/guxuerui/emoji-picker"
-      target="_blank"
-      title="GitHub"
-    >
-      <span class="scale-160" i-carbon-logo-github />
-    </a>
-  </div>
+  <HandleTheme />
+
   <div bg-white dark:bg-black rounded-2xl pt-4>
     {#if categoriesData.length}
       <div pl-2 flex="~ gap-x-2">
