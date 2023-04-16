@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   import { toast } from "svoast";
   import Line from "$lib/components/Line.svelte";
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
@@ -170,7 +171,7 @@
       />
     </div>
     {#if searchedEmojis.length}
-      <ul pa-0 mt-2 mx-auto w-sm h-xs overflow-y-auto>
+      <ul pa-0 mt-2 mx-auto w-sm h-xs overflow-y-auto in:fade>
         {#each searchedEmojis as emoji}
           <li
             class="list-none w-8 h-8 rounded-50 transition-colors float-left text-center"
