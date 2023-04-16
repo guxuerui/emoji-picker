@@ -9,7 +9,7 @@
   import Footer from "$lib/components/Footer.svelte";
   import { tooltip } from "svooltip";
   import "svooltip/styles.css";
-  import type { IEmoji } from "$lib/types";
+  import type { IEmoji, ISignature, ICategory } from "$lib/types";
   import type { PageData } from "./$types";
   import { t, locale } from "$lib/translations/i18n";
 
@@ -79,6 +79,12 @@
     return currCategoriesData;
   }
 
+  const categoryIdMap: ISignature = {
+    people: "Smileys & People",
+    nature: "Animals & Nature",
+  };
+  let currentEmojiId = "";
+
   onMount(async () => {
     // handle emojis data
     const fetchData = data.jsonData;
@@ -93,19 +99,9 @@
       }
     );
 
-    const emojisCategories: any[] = fetchData.categories;
-
+    const emojisCategories: ICategory[] = fetchData.categories;
     for (let i = 0; i < emojisCategories.length; i++) {
-      let currentEmojiId = "";
-      if (emojisCategories[i].id === "people") {
-        currentEmojiId = "Smileys & People";
-      } else if (emojisCategories[i].id === "nature") {
-        currentEmojiId = "Animals & Nature";
-      } else {
-        currentEmojiId =
-          emojisCategories[i].id.charAt(0).toUpperCase() +
-          emojisCategories[i].id.slice(1);
-      }
+      currentEmojiId = categoryIdMap[emojisCategories[i].id] || emojisCategories[i].id.charAt(0).toUpperCase() + emojisCategories[i].id.slice(1);
 
       categoriesData = [
         ...categoriesData,
@@ -118,6 +114,7 @@
       ];
     }
 
+    // init data
     searchedEmojis = categoriesData[0].emojis;
   });
 </script>
