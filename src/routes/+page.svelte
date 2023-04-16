@@ -4,6 +4,7 @@
   import Line from "$lib/components/Line.svelte";
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
   import HandleLocale from "$lib/components/HandleLocale.svelte";
+  import Footer from "$lib/components/Footer.svelte";
   import { tooltip } from "svooltip";
   import "svooltip/styles.css";
   import type { IEmoji } from "$lib/types";
@@ -182,6 +183,7 @@
     {/if}
 
     <Line />
+
     <div text-center w-full>
       <input
         type="text"
@@ -227,21 +229,7 @@
     <PreviewEmoji {showCurrentEmoji} {currentEmoji} />
   </div>
 
-  <div mt-4 text-gray-600 dark:text-gray-300>
-    Made by
-    <a
-      border="0 b-1 dashed #aaa"
-      hover:border="solid #000"
-      dark:hover:border="solid #fff"
-      class="page-title transition-colors"
-      rel="noreferrer"
-      href="https://www.guxuerui.cn"
-      target="_blank"
-      title="MyBlog"
-    >
-      guxuerui
-    </a>
-  </div>
+  <Footer />
 </section>
 
 <style>
@@ -251,26 +239,6 @@
     justify-content: center;
     align-items: center;
     flex: 0.6;
-  }
-  .page-title {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(
-      to right,
-      #d16ba5,
-      #c777b9,
-      #ba83ca,
-      #aa8fd8,
-      #9a9ae1,
-      #8aa7ec,
-      #79b3f4,
-      #69bff8,
-      #52cffe,
-      #41dfff,
-      #46eefa,
-      #5ffbf1
-    );
   }
   section ul::-webkit-scrollbar {
     display: none;
