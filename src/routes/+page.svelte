@@ -5,6 +5,7 @@
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
   import HandleLocale from "$lib/components/HandleLocale.svelte";
   import HandleTheme from "$lib/components/HandleTheme.svelte";
+  import NoResult from "$lib/components/NoResult.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import { tooltip } from "svooltip";
   import "svooltip/styles.css";
@@ -67,6 +68,17 @@
     }
   }
 
+  function handleEmojiCaegories(category: any) {
+    let currCategoriesData: any[] = [];
+    for (let i = 0; i < category.emojis.length; i++) {
+      const currEmoji = emojisData.filter(
+        (emoji) => emoji.name === category.emojis[i]
+      );
+      currCategoriesData = [...currCategoriesData, ...currEmoji];
+    }
+    return currCategoriesData;
+  }
+
   onMount(async () => {
     // handle emojis data
     const fetchData = data.jsonData;
@@ -82,16 +94,6 @@
     );
 
     const emojisCategories: any[] = fetchData.categories;
-    function handleEmojiCaegories(category: any) {
-      let currCategoriesData: any[] = [];
-      for (let i = 0; i < category.emojis.length; i++) {
-        const currEmoji = emojisData.filter(
-          (emoji) => emoji.name === category.emojis[i]
-        );
-        currCategoriesData = [...currCategoriesData, ...currEmoji];
-      }
-      return currCategoriesData;
-    }
 
     for (let i = 0; i < emojisCategories.length; i++) {
       let currentEmojiId = "";
@@ -190,15 +192,7 @@
         {/each}
       </ul>
     {:else}
-      <div
-        text-gray-700
-        dark:text-gray-200
-        pa-0
-        mx-auto
-        class="w-xs h-xs flex justify-center items-center"
-      >
-        {$t("homepage.nodata")}
-      </div>
+      <NoResult />
     {/if}
 
     <Line />
