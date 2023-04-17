@@ -13,6 +13,7 @@
   import type { IEmoji, ISignature, ICategory } from "$lib/types";
   import type { PageData } from "./$types";
   import { t, locale } from "$lib/translations/i18n";
+  import { clipboard } from "$lib/actions/clipboard";
 
   export let data: PageData;
 
@@ -57,18 +58,6 @@
     showCurrentEmoji = true;
   }
 
-  async function handlePickEmoji(emoji: IEmoji) {
-    try {
-      navigator?.canShare
-        ? await navigator.share({ title: emoji.title, text: emoji.name })
-        : await navigator.clipboard.writeText(`:${emoji.name}:`);
-
-      toast.success($t("homepage.copyToast"));
-    } catch (error) {
-      toast.error(error.toString());
-    }
-  }
-
   function handleEmojiCaegories(category: any) {
     let currCategoriesData: any[] = [];
     for (let i = 0; i < category.emojis.length; i++) {
@@ -102,7 +91,10 @@
 
     const emojisCategories: ICategory[] = fetchData.categories;
     for (let i = 0; i < emojisCategories.length; i++) {
-      currentEmojiId = categoryIdMap[emojisCategories[i].id] || emojisCategories[i].id.charAt(0).toUpperCase() + emojisCategories[i].id.slice(1);
+      currentEmojiId =
+        categoryIdMap[emojisCategories[i].id] ||
+        emojisCategories[i].id.charAt(0).toUpperCase() +
+          emojisCategories[i].id.slice(1);
 
       categoriesData = [
         ...categoriesData,
@@ -175,13 +167,16 @@
         {#each searchedEmojis as emoji}
           <li
             class="list-none w-8 h-8 rounded-50 transition-colors float-left text-center"
-            hover="cursor-pointer bg-gray-200"
+            hover="bg-gray-200"
             dark:hover="bg-gray-700"
             on:mouseenter={handleMouseOver(emoji)}
             on:mouseleave={() => (showCurrentEmoji = false)}
           >
             <button
-              on:click={() => handlePickEmoji(emoji)}
+              use:clipboard={{
+                value: `:${emoji.name}:`,
+                fn: () => toast.success($t("homepage.copyToast")),
+              }}
               class="mt-0.1rem mx-auto pa-0 text-1.5rem bg-transparent border-0 hover:cursor-pointer"
             >
               {emoji.icon}
