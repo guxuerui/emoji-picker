@@ -158,7 +158,12 @@
         type="text"
         on:keyup={searchEmojis(searchValue)}
         bind:value={searchValue}
-        class="bg-gray-200 border-0 ring-0 text-gray-900 text-sm rounded-xl px-4 py-2 mt-3 w-6/7 dark:bg-gray/30 dark:placeholder-gray-400 dark:text-white"
+        p="x-4 y-2"
+        mt-3
+        text="sm gray-900"
+        dark:text="white"
+        border="0 rounded-xl"
+        class="ring-0 w-6/7 bg-gray-200 dark:bg-gray/30 dark:placeholder-gray-400"
         placeholder={$t("homepage.search")}
       />
     </div>
