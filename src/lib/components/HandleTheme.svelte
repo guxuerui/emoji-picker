@@ -1,20 +1,25 @@
 <script lang="ts">
-  import { onMount } from "svelte"
-  import { currentTheme, toggleTheme, loadTheme } from "$lib/utils/handleTheme";
-
-  onMount(() => {
-    loadTheme()
-  })
+  import { currentTheme } from "$lib/utils/handleTheme";
 </script>
-<div class="mb-4">
+
+<div class="mb-6">
   <button
     class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
-    on:click={toggleTheme}
   >
-    {#if currentTheme === "light" || currentTheme === "auto"}
-      <div class="scale-180" i-carbon-sun />
+    {#if $currentTheme === "light" || $currentTheme === "auto"}
+      <button
+        class="scale-180"
+        i-carbon-sun
+        hover="cursor-pointer"
+        on:click={() => ($currentTheme = "dark")}
+      />
     {:else}
-      <div class="scale-180" i-carbon-moon />
+      <button
+        class="scale-180"
+        i-carbon-moon
+        hover="cursor-pointer"
+        on:click={() => ($currentTheme = "light")}
+      />
     {/if}
   </button>
   <a
