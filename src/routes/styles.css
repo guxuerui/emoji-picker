@@ -84,11 +84,6 @@ button:focus:not(:focus-visible) {
 	white-space: nowrap;
 }
 
-/* for svoast */
-.svoast-message {
-  line-height: 22px;
-}
-
 .page-title {
   background-clip: text;
   -webkit-background-clip: text;
