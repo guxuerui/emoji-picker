@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-  import { toast } from "svoast";
+  import toast from "svelte-french-toast";
   import Line from "$lib/components/Line.svelte";
   import PreviewEmoji from "$lib/components/PreviewEmoji.svelte";
   import HandleLocale from "$lib/components/HandleLocale.svelte";
@@ -14,6 +14,7 @@
   import type { PageData } from "./$types";
   import { t, locale } from "$lib/translations/i18n";
   import { clipboard } from "$lib/actions/clipboard";
+  import { currentTheme } from "$lib/utils/handleTheme";
 
   export let data: PageData;
 
@@ -74,6 +75,19 @@
     nature: "Animals & Nature",
   };
   let currentEmojiId = "";
+
+  // toast style
+  $: toastBgColor = $currentTheme === "dark" ? "#333" : "#fff";
+  $: toastTextColor = $currentTheme === "dark" ? "#fff" : "#333";
+
+  function handleClickEmoji() {
+    toast($t("homepage.copyToast"), {
+      icon: currentEmoji.icon,
+      position: "bottom-center",
+      duration: 2000,
+      style: `border-radius: 10px; background: ${toastBgColor}; color: ${toastTextColor};`,
+    });
+  }
 
   onMount(async () => {
     // handle emojis data
@@ -180,7 +194,7 @@
             <button
               use:clipboard={{
                 value: `:${emoji.name}:`,
-                fn: () => toast.success($t("homepage.copyToast")),
+                fn: handleClickEmoji,
               }}
               class="mt-0.1rem mx-auto pa-0 text-1.5rem bg-transparent border-0 hover:cursor-pointer"
             >
