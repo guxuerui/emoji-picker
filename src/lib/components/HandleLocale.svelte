@@ -1,13 +1,14 @@
 <script lang="ts">
   import { locale } from "$lib/translations/i18n";
 </script>
+
 <div class="mt-2 mb-4 text-center">
   <button
-    bg="transparent"
+    bg="#199/50"
     dark="text-white"
     dark:hover="bg-#199"
     hover="text-white cursor-pointer bg-#199"
-    border="1 #199 rounded-lg"
+    border="0 #199 rounded-lg"
     text="sm font-medium"
     p="x-2 y-1"
     mr-2
@@ -19,11 +20,11 @@
   </button>
 
   <button
-    bg="transparent"
+    bg="#199/50"
     dark="text-white"
     dark:hover="bg-#199"
     hover="text-white cursor-pointer bg-#199"
-    border="1 #199 rounded-lg"
+    border="0 #199 rounded-lg"
     text="sm font-medium"
     p="x-2 y-1"
     transition
@@ -41,3 +42,4 @@
     border-color: #199;
   }
 </style>
+
