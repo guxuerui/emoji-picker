@@ -1,27 +1,9 @@
 <script lang="ts">
-  import { currentTheme } from "$lib/utils/handleTheme";
+  import ToggleTheme from "$lib/components/ToggleTheme.svelte";
 </script>
 
 <div class="mb-6">
-  <button
-    class="border-0 bg-transparent icon-btn px-0 !outline-none c-gray-600 hover:c-black dark:c-gray-400 dark:hover:c-white"
-  >
-    {#if $currentTheme === "light" || $currentTheme === "auto"}
-      <button
-        class="scale-180"
-        i-carbon-sun
-        hover="cursor-pointer"
-        on:click={() => ($currentTheme = "dark")}
-      />
-    {:else}
-      <button
-        class="scale-180"
-        i-carbon-moon
-        hover="cursor-pointer"
-        on:click={() => ($currentTheme = "light")}
-      />
-    {/if}
-  </button>
+  <ToggleTheme />
   <a
     class="ml-3 c-gray-600 dark:c-gray-400"
     hover="c-black"
