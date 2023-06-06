@@ -14,7 +14,6 @@
   import type { PageData } from "./$types";
   import { t, locale } from "$lib/translations/i18n";
   import { clipboard } from "$lib/actions/clipboard";
-  import { currentTheme } from "$lib/utils/handleTheme";
 
   export let data: PageData;
 
@@ -76,9 +75,14 @@
   };
   let currentEmojiId = "";
 
+  $: currentTheme = ''
+  function handleThemeChanged(event: CustomEvent<{ currentTheme: string }>) {
+    currentTheme = event.detail.currentTheme
+  }
+
   // toast style
-  $: toastBgColor = $currentTheme === "dark" ? "#333" : "#fff";
-  $: toastTextColor = $currentTheme === "dark" ? "#fff" : "#333";
+  $: toastBgColor = currentTheme === "dark" ? "#333" : "#fff";
+  $: toastTextColor = currentTheme === "dark" ? "#fff" : "#333";
 
   function handleClickEmoji() {
     toast($t("homepage.copyToast"), {
@@ -141,7 +145,7 @@
 
   <HandleLocale />
 
-  <HandleTheme />
+  <HandleTheme on:toggleTheme={handleThemeChanged} />
 
   <div bg-white dark:bg-black rounded-2xl pt-4>
     {#if categoriesData.length}

@@ -3,7 +3,7 @@
 </script>
 
 <div class="mb-6">
-  <ToggleTheme />
+  <ToggleTheme on:toggleTheme />
   <a
     class="ml-3 c-gray-600 dark:c-gray-400"
     hover="c-black"

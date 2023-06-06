@@ -1,5 +1,8 @@
 <script lang="ts">
   import { onMount, tick } from "svelte";
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 
   $: currentTheme = "";
 
@@ -61,6 +64,10 @@
 
   function loadTheme() {
     currentTheme = localStorage.getItem("color-schema") || "auto";
+    // dispatch event
+    dispatch('toggleTheme', {
+      currentTheme
+    })
   }
 
   onMount(() => {
