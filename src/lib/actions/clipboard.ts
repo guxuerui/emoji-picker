@@ -38,8 +38,8 @@ export function clipboard(node: HTMLElement, args: any) {
   node.addEventListener('click', onClick);
 
   return {
-    update(neweArgs: any) {
-      args = neweArgs
+    update(newArgs: any) {
+      args = newArgs
     },
     destroy() {
       node.removeEventListener('click', onClick);
