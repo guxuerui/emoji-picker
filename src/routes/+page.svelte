@@ -58,7 +58,7 @@
     showCurrentEmoji = true;
   }
 
-  function handleEmojiCaegories(category: any) {
+  function handleEmojiCategories(category: any) {
     let currCategoriesData: any[] = [];
     for (let i = 0; i < category.emojis.length; i++) {
       const currEmoji = emojisData.filter(
@@ -119,7 +119,7 @@
         ...[
           {
             id: currentEmojiId,
-            emojis: handleEmojiCaegories(emojisCategories[i]),
+            emojis: handleEmojiCategories(emojisCategories[i]),
           },
         ],
       ];
@@ -174,7 +174,7 @@
     <div text-center w-full>
       <input
         type="text"
-        on:keyup={searchEmojis(searchValue)}
+        on:keyup={() => searchEmojis(searchValue)}
         bind:value={searchValue}
         p="x-4 y-2"
         mt-3
